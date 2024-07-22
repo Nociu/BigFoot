@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiénes Somos</title>
+  <link rel="stylesheet" href="{% static '/css/style.css' %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    /* Ajustes adicionales si es necesario */
+    .dropdown-menu.custom-dropdown {
+      right: auto;
+      left: 0;
+      transform: translateX(-50%);
+    }
+
+    /* Estilo para el enlace de registro en el dropdown */
+    #register-link {
+      font-weight: bold;
+      color: #007bff;
+      cursor: pointer;
+    }
+
+    #register-link:hover {
+      text-decoration: underline;
+      color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="#">BigFoot</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'clima' %}">Clima</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'mis_productos' %}">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contactenos' %}">Contacto</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'quienes_somos' %}">Sobre Nosotros</a>
+        </li>
+      </ul>
+    </div>
+    <span class="cart-icon"><a href="{% url 'carro_compra' %}">&#128722;</a></span>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Cuenta
+      </a>
+      <div class="dropdown-menu custom-dropdown p-3" aria-labelledby="navbarDropdown">
+        <form class="px-4 py-3" id="login-form">
+          <div class="form-group">
+            <label for="loginEmail">Correo electrónico</label>
+            <input type="email" class="form-control" id="loginEmail" placeholder="email@example.com">
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Contraseña</label>
+            <input type="password" class="form-control" id="loginPassword" placeholder="Contraseña">
+          </div>
+          <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        </form>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="http://127.0.0.1:9010//register/" id="register-link">¿Nuevo aquí? Regístrate</a>
+      </div>
+    </li>
+  </nav>
+
+  <div class="container mt-5">
+    <h2>Quiénes Somos</h2>
+    <p>En "BigFoot", entendemos que las zapatillas son mucho más que simples accesorios para los pies. Son una declaración de estilo, comodidad y rendimiento. Por eso, nos esforzamos por brindar a nuestros clientes una experiencia de compra excepcional, donde puedan encontrar el par perfecto que se adapte a su personalidad y satisfaga sus exigencias.
+
+      Nuestro extenso catálogo cuenta con una cuidadosa selección de zapatillas de las marcas más reconocidas y aclamadas del mercado. Trabajamos directamente con fabricantes y distribuidores confiables para asegurarnos de que nuestros productos sean auténticos, duraderos y estén a la vanguardia de las últimas tendencias.</p>
+    <h3>Equipo</h3>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <img src="{% static '/img/sobrenosotros/benjamin.jpeg' %}" alt="Benjamin Hurtado" class="rounded-circle mx-auto d-block" style="width: 150px; height: 150px;">
+          <div class="card-body text-center">
+            <h4 class="card-title">Benjamin Hurtado</h4>
+            <p class="card-text">Analista programador</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <img src="{% static '/img/sobrenosotros/abraham.jpeg' %}" alt="Abraham Gonzalez" class="rounded-circle mx-auto d-block" style="width: 150px; height: 150px;">
+          <div class="card-body text-center">
+            <h4 class="card-title">Abraham Gonzalez</h4>
+            <p class="card-text">Analista programador</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <img src="{% static '/img/sobrenosotros/rolando.jpeg' %}" alt="Rolando Isea" class="rounded-circle mx-auto d-block" style="width: 150px; height: 150px;">
+          <div class="card-body text-center">
+            <h4 class="card-title">Rolando Isea</h4>
+            <p class="card-text">Analista programador</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer mt-5">
+    <div class="container text-center">
+      <span class="text-muted">&copy; 2024 Tienda Online. Todos los derechos reservados.</span>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

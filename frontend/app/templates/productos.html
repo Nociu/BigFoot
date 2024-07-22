@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Productos</title>
+  <script src="{% static 'js/fetch.js' %}" defer></script>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    .dropdown-menu.custom-dropdown {
+      right: auto;
+      left: 0;
+      transform: translateX(-50%);
+    }
+
+    /* Estilo para el enlace de registro en el dropdown */
+    #register-link {
+        font-weight: bold;
+        color: #007bff;
+        cursor: pointer;
+    }
+
+    #register-link:hover {
+        text-decoration: underline;
+        color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="#">BigFoot</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'clima' %}">Clima</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'mis_productos' %}">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contactenos' %}">Contacto</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'quienes_somos' %}">Sobre Nosotros</a>
+        </li>
+        <span class="cart-icon"><a href="{% url 'carro_compra' %}">&#128722;</a></span>
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <span class="nav-link">Bienvenido, {{ user.nombre }}!</span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+          </li>
+        {% else %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Cuenta
+            </a>
+            <div class="dropdown-menu custom-dropdown p-3" aria-labelledby="navbarDropdown">
+                <form class="px-4 py-3" id="login-form">
+                    <div class="form-group">
+                        <label for="loginEmail">Correo electrónico</label>
+                        <input type="email" class="form-control" id="loginEmail" placeholder="email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Contraseña</label>
+                        <input type="password" class="form-control" id="loginPassword" placeholder="Contraseña">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                </form>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="http://127.0.0.1:9010//register/" id="register-link">¿Nuevo aquí? Regístrate</a>
+            </div>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <h2>Zapatillas</h2>
+    <div class="row">
+      {% for producto in productos %}
+      <div class="col-md-3">
+        <div class="card product-card">
+          <img src="{% static 'img/zapatillas/'|add:producto.foto %}" alt="{{ producto.nombre }}" class="card-img-top">
+          <div class="card-body">
+            <h4 class="card-title">{{ producto.nombre }}</h4>
+            <p class="card-text">Precio: {{ producto.precio }}</p>
+            <p class="card-text">Stock: {{ producto.stock }} unidades</p>
+            <p class="card-text">{{ producto.descripcion }}</p>
+            <a href="#" class="btn btn-primary llevar-carro" data-producto-id="{{ producto.id }}">Llevar carro</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <footer class="footer mt-5">
+    <div class="container text-center">
+      <span class="text-muted">&copy; 2024 Tienda Online. Todos los derechos reservados.</span>
+    </div>
+  </footer>
+
+  <!-- Incluye jQuery y Bootstrap JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

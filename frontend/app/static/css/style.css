@@ -1,0 +1,117 @@
+
+.navbar {
+    background-color: #f8f9fa;
+}
+  
+.carousel-item {
+height: 400px;
+}
+  
+.cart-icon,
+.user-icon {
+font-size: 20px;
+margin-right: 10px;
+}
+.product-card {
+    margin-bottom: 0px;
+}
+.rounded-circle {
+    border-radius: 50%;
+}
+.product-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+/*footer*/
+.footer {
+background-color: #f8f9fa;
+padding: 10px 0;
+}
+  
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+
+.cart-icon a {
+    color: white;
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+.cart-icon a:hover {
+    color: #d1ecf1;
+}
+
+/* Estilos del widget del clima */
+#WidgetTutiempo {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#WidgetTutiempo .header h2 {
+    font-size: 1.5rem;
+    color: #007bff;
+}
+
+#WidgetTutiempo .date {
+    font-size: 1.2rem;
+    color: #555;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+#WidgetTutiempo .daydata {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center; 
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px; 
+    margin-bottom: 10px;
+}
+
+#WidgetTutiempo .daydata:last-child {
+    border-bottom: none;
+}
+
+#WidgetTutiempo .it,
+#WidgetTutiempo .wind,
+#WidgetTutiempo .oc,
+#WidgetTutiempo .moon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+#WidgetTutiempo .it img,
+#WidgetTutiempo .wind img,
+#WidgetTutiempo .moon img {
+    margin-right: 10px;
+}
+
+#WidgetTutiempo .linkTT {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#WidgetTutiempo .linkTT a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+#WidgetTutiempo .linkTT a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Contraseña</title>
+    <link rel="stylesheet" href="/static/css/forget.css">
+    <script>
+        function recuperarContraseña() {
+            // Aquí puedes agregar el código para enviar la solicitud de recuperación de contraseña, como por ejemplo una solicitud AJAX
+            // En este ejemplo, se muestra una alerta como confirmación de que se ha iniciado el proceso de recuperación
+            alert("Se ha iniciado el proceso de recuperación de contraseña.");
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Recuperar Contraseña</h1>
+        <form onsubmit="recuperarContraseña(); return false;">
+            <label for="email"></label><br>
+            <input class="controls" type="email" name="correo" id="correo" placeholder="Ingrese su Correo">
+            <input type="submit" value="Recuperar Contraseña">
+            <button type="button" onclick="window.location.href='http://localhost:9010/';">Volver al inicio</button>
+        </form>
+    </div>
+</body>
+</html>

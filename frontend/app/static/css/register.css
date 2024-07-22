@@ -1,0 +1,90 @@
+/* register.css */
+
+/* Estilo general para el cuerpo del documento */
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #4facfe, #00f2fe);
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* Estilo para el contenedor del formulario */
+.container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Título del formulario */
+#register-form h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #007bff;
+}
+
+/* Estilo para los grupos de formulario */
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+/* Estilo para las etiquetas del formulario */
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Estilo para los campos de entrada */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/* Estilo para el botón de envío */
+#register-form button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 15px 20px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+#register-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilo para mensajes de éxito/error */
+#register-form #message {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#register-form #message.success {
+  color: green;
+}
+
+#register-form #message.error {
+  color: red;
+}

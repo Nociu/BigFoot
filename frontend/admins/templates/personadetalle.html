@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Detalles de la Persona</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    /* Ajustes adicionales si es necesario */
+    .dropdown-menu.custom-dropdown {
+      right: auto;
+      left: 0;
+      transform: translateX(-50%);
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+      $(document).ready(function() {
+          // Obtener el ID de la persona desde el contexto de la página o desde algún otro lugar
+          var idPersona = "{{ id|default_if_none:'null' }}";
+
+          // Verificar si el ID es válido antes de continuar
+          if (idPersona !== "null") {
+              // URL para obtener los datos de la persona desde la API de Django
+              var urlObtenerPersona = 'http://127.0.0.1:9020/personadetalle/' + idPersona + '/';
+
+              // Realizar solicitud AJAX para obtener los datos de la persona
+              $.ajax({
+                  type: "GET",
+                  url: urlObtenerPersona,
+                  dataType: "json",
+                  success: function(response) {
+                      if (response.registro) {
+                          // Llenar los campos del formulario con los datos obtenidos
+                          $('#personaNombre').val(response.registro.nombre);
+                          $('#personaApellido').val(response.registro.apellido);
+                          $('#personaCorreo').val(response.registro.correo);
+                          $('#personaContraseña').val(response.registro.contraseña);
+                      } else {
+                          alert('No se encontraron datos para esta persona.');
+                      }
+                  },
+                  error: function(error) {
+                      console.error('Error al obtener los datos de la persona: ' + JSON.stringify(error));
+                      alert('Error al cargar los datos de la persona');
+                  }
+              });
+          } else {
+              console.error('ID de persona no válido');
+              alert('ID de persona no válido');
+          }
+      });
+  </script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="#">BigFoot</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'clima' %}">Clima</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'mis_productos' %}">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contactenos' %}">Contacto</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'quienes_somos' %}">Sobre Nosotros</a>
+        </li>
+      </ul>
+    </div>
+    <span class="cart-icon"><a href="{% url 'carro_compra' %}">&#128722;</a></span>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Cuenta
+      </a>
+      <div class="dropdown-menu custom-dropdown p-3" aria-labelledby="navbarDropdown">
+        <form class="px-4 py-3" id="login-form">
+          <div class="form-group">
+            <label for="loginEmail">Correo electrónico</label>
+            <input type="email" class="form-control" id="loginEmail" placeholder="email@example.com">
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Contraseña</label>
+            <input type="password" class="form-control" id="loginPassword" placeholder="Contraseña">
+          </div>
+          <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        </form>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#" id="register-link" data-toggle="modal" data-target="#registerModal">¿Nuevo aquí? Regístrate</a>
+      </div>
+    </li>
+  </nav>
+
+  <!-- FORMULARIO para mostrar los datos -->
+  <div class="container mt-5">
+    <h2>Detalles de la Persona</h2>
+    <form id="editarPersonaForm">
+        <div class="form-group">
+            <label for="personaNombre">Nombre</label>
+            <input type="text" class="form-control" id="personaNombre" name="nombre" readonly>
+        </div>
+        <div class="form-group">
+            <label for="personaApellido">Apellido</label>
+            <input type="text" class="form-control" id="personaApellido" name="apellido" readonly>
+        </div>
+        <div class="form-group">
+            <label for="personaCorreo">Correo</label>
+            <input type="text" class="form-control" id="personaCorreo" name="correo" readonly>
+        </div>
+        <div class="form-group">
+            <label for="personaContraseña">Contraseña</label>
+            <input type="text" class="form-control" id="personaContraseña" name="contraseña" readonly>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="window.history.back();">Volver</button>
+    </form>
+  </div>
+
+  <footer class="footer mt-5">
+    <div class="container text-center">
+      <span class="text-muted">&copy; 2024 Tienda Online. Todos los derechos reservados.</span>
+    </div>
+  </footer>
+  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var loginLink = document.getElementById('register-link');
+      var registerLink = document.getElementById('login-link');
+      var loginForm = document.getElementById('login-form');
+      var registerForm = document.getElementById('register-form');
+
+      // Lógica de mostrar/ocultar los formularios dentro del modal
+      loginLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        $('#registerModal').modal('show');
+      });
+
+      registerLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        $('#registerModal').modal('hide');
+        $('#loginModal').modal('show');
+      });
+    });
+  </script>
+
+</body>
+</html>

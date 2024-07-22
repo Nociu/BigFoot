@@ -1,0 +1,193 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Carro de Compra</title>
+  <link rel="stylesheet" href="{% static '/css/style.css' %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    /* Ajustes adicionales si es necesario */
+    .dropdown-menu.custom-dropdown {
+      right: auto;
+      left: 0;
+      transform: translateX(-50%);
+    }
+
+    /* Estilo para el enlace de registro en el dropdown */
+#register-link {
+    font-weight: bold;
+    color: #007bff;
+    cursor: pointer;
+}
+
+#register-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="#">BigFoot</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'clima' %}">Clima</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'mis_productos' %}">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contactenos' %}">Contacto</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'quienes_somos' %}">Sobre Nosotros</a>
+        </li>
+      </ul>
+    </div>
+    <span class="cart-icon"><a href="{% url 'carro_compra' %}">&#128722;</a></span>
+    <li class="nav-item dropdown">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Cuenta
+        </a>
+        <div class="dropdown-menu custom-dropdown p-3" aria-labelledby="navbarDropdown">
+            <form class="px-4 py-3" id="login-form">
+                <div class="form-group">
+                    <label for="loginEmail">Correo electrónico</label>
+                    <input type="email" class="form-control" id="loginEmail" placeholder="email@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña</label>
+                    <input type="password" class="form-control" id="loginPassword" placeholder="Contraseña">
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="http://localhost:9010/register/" id="register-link">¿Nuevo aquí? Regístrate</a>
+        </div>
+    </li>
+  </nav>
+  <div class="container">
+    <h2>Carro de Compra</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Foto</th>
+          <th>ID Producto</th>
+          <th>Nombre Producto</th>
+          <th>Valor Unitario</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td><img src="{% static 'img/zapatillas/1.jpg'%}" alt="Producto 1" class="product-img"></td>
+          <td>001</td>
+          <td>ZAPATILLA PUMA FOREVERRUN NITRO FUTROGRADE</td>
+          <td>$139,990</td>
+          <td><input type="number" min="1" value="1" max="5" onchange="calculateSubtotal(this)"></td>
+          <td>$139,990</td>
+          <td><button class="btn btn-danger btn-sm" onclick="removeProduct(this)">Eliminar</button></td>
+        </tr>
+        
+        <tr>
+          <td><img src="{% static 'img/zapatillas/2.jpg'%}" alt="Producto 2" class="product-img"></td>
+          <td>002</td>
+          <td>ZAPATILLA PUMA FOREVERRUN NITRO FUTROGRADE</td>
+          <td>$139,990</td>
+          <td><input type="number" min="1" value="1" max="5" onchange="calculateSubtotal(this)"></td>
+          <td>$139,990</td>
+          <td><button class="btn btn-danger btn-sm" onclick="removeProduct(this)">Eliminar</button></td>
+        </tr>
+        <tr>
+          <td><img src="{% static 'img/zapatillas/3.jpg'%}" alt="Producto 3" class="product-img"></td>
+          <td>003</td>
+          <td>ZAPATILLA ADIDAS SAMBA OG</td>
+          <td>$139,990</td>
+          <td><input type="number" min="1" value="1" max="5" onchange="calculateSubtotal(this)"></td>
+          <td>$139,990</td>
+          <td><button class="btn btn-danger btn-sm" onclick="removeProduct(this)">Eliminar</button></td>
+        </tr>
+        <tr>
+          <td><img src="{% static 'img/zapatillas/4.jpg'%}" alt="Producto 4" class="product-img"></td>
+          <td>004</td>
+          <td>ZAPATILLA ADIDAS SAMBA OG CLOUD</td>
+          <td>$139,990</td>
+          <td><input type="number" min="1" value="1" max="5" onchange="calculateSubtotal(this)"></td>
+          <td>$139,990</td>
+          <td><button class="btn btn-danger btn-sm" onclick="removeProduct(this)">Eliminar</button></td>
+        </tr>
+        <tr>
+          <td><img src="{% static 'img/zapatillas/5.jpg'%}" alt="Producto 5" class="product-img"></td>
+          <td>005</td>
+          <td>ZAPATILLA JORDAN AIR 13 RETRO</td>
+          <td>$139,990</td>
+          <td><input type="number" min="1" value="1" max="5" onchange="calculateSubtotal(this)"></td>
+          <td>$139,990</td>
+          <td><button class="btn btn-danger btn-sm" onclick="removeProduct(this)">Eliminar</button></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="6" class="text-right"><strong>Total a Pagar:</strong></td>
+          <td id="total"></td>
+        </tr>
+      </tfoot>
+    </table>
+    <button id="pagarBtn" class="btn btn-primary">Pagar</button>
+    <div id="successMsg" class="alert alert-success mt-3" style="display: none;">
+      Pago realizado con éxito. Gracias por su compra.
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="{% static '/js/script.js' %}"></script>
+  <script>
+    function removeProduct(button) {
+      // Obtiene la fila del producto a eliminar
+      var row = button.parentNode.parentNode;
+      // Elimina la fila de la tabla
+      row.parentNode.removeChild(row);
+      // Recalcula el total
+      calculateTotal();
+    }
+
+    function calculateTotal() {
+      var total = 0;
+      // Recorre todas las filas de la tabla y suma los subtotales
+      document.querySelectorAll('tbody tr').forEach(function(row) {
+        var subtotal = parseFloat(row.cells[5].innerText.replace('$', '').replace(',', ''));
+        total += subtotal;
+      });
+      // Actualiza el total en el pie de la tabla
+      document.getElementById('total').innerText = '$' + total.toLocaleString();
+    }
+
+    function calculateSubtotal(input) {
+      var row = input.parentNode.parentNode;
+      var price = parseFloat(row.cells[3].innerText.replace('$', '').replace(',', ''));
+      var quantity = input.value;
+      var subtotal = price * quantity;
+      row.cells[5].innerText = '$' + subtotal.toLocaleString();
+      calculateTotal();
+    }
+
+    // Inicializa el total al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+      calculateTotal();
+    });
+  </script>
+
+</body>
+</html>

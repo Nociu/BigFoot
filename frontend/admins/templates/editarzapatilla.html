@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Productos</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    /* Ajustes adicionales si es necesario */
+    .dropdown-menu.custom-dropdown {
+      right: auto;
+      left: 0;
+      transform: translateX(-50%);
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+      $(document).ready(function() {
+          // Obtener el ID de la zapatilla desde el contexto de la página o desde algún otro lugar
+          var idZapatilla = {{ id|default_if_none:'null' }};
+
+          // Verificar si el ID es válido antes de continuar
+          if (idZapatilla !== null) {
+              // URL para obtener los datos de la zapatilla desde la API de Django
+              var urlObtenerZapatilla = 'http://127.0.0.1:9020/zapatilladetalle/' + idZapatilla ; //backend
+
+              // Realizar solicitud AJAX para obtener los datos de la zapatilla
+              jQuery.ajax({
+                  type: "GET",
+                  url: urlObtenerZapatilla,
+                  dataType: "json",
+                  success: function(response) {
+                    console.log(response)
+                      // Llenar los campos del formulario con los datos obtenidos
+                      jQuery('#zapatillaNombre').val(response.registro.nombre);
+                      jQuery('#zapatillaDescripcion').val(response.registro.descripcion);
+                      jQuery('#zapatillaPrecio').val(response.registro.precio);
+                      jQuery('#zapatillaStock').val(response.registro.stock);
+                  },
+                  error: function(error) {
+                      console.error('Error al obtener los datos de la zapatilla: ' + JSON.stringify(error));
+                      alert('Error al cargar los datos de la zapatilla');
+                  }
+              });
+          } else {
+              console.error('ID de zapatilla no válido');
+              alert('ID de zapatilla no válido');
+          }
+      });
+  </script>
+</head>
+
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="#">BigFoot</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'clima' %}">Clima</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'mis_productos' %}">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contactenos' %}">Contacto</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'quienes_somos' %}">Sobre Nosotros</a>
+        </li>
+      </ul>
+    </div>
+    <span class="cart-icon"><a href="{% url 'carro_compra' %}">&#128722;</a></span>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Cuenta
+      </a>
+      <div class="dropdown-menu custom-dropdown p-3" aria-labelledby="navbarDropdown">
+        <form class="px-4 py-3" id="login-form">
+          <div class="form-group">
+            <label for="loginEmail">Correo electrónico</label>
+            <input type="email" class="form-control" id="loginEmail" placeholder="email@example.com">
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Contraseña</label>
+            <input type="password" class="form-control" id="loginPassword" placeholder="Contraseña">
+          </div>
+          <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        </form>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#" id="register-link" data-toggle="modal" data-target="#registerModal">¿Nuevo aquí? Regístrate</a>
+      </div>
+    </li>
+  </nav>
+
+
+  <!-- TABLA para el LISTAR -->
+  <div class="container mt-5">
+    <h2>Editar Zapatilla</h2>
+    <form id="editarZapatillaForm">
+        <div class="form-group">
+            <label for="zapatillaNombre">Nombre</label>
+            <input type="text" class="form-control" id="zapatillaNombre" name="nombre" required>
+        </div>
+        <div class="form-group">
+            <label for="zapatillaDescripcion">Descripción</label>
+            <input type="text" class="form-control" id="zapatillaDescripcion" name="descripcion" required>
+        </div>
+        <div class="form-group">
+            <label for="zapatillaPrecio">Precio</label>
+            <input type="number" class="form-control" id="zapatillaPrecio" name="precio" required>
+        </div>
+        <div class="form-group">
+            <label for="zapatillaStock">Stock</label>
+            <input type="number" class="form-control" id="zapatillaStock" name="stock" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+
+
+  <!-- Modal para el registro -->
+  <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="registerModalLabel">Registrarse</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="register-form">
+            <div class="form-group">
+              <label for="registerEmail">Correo electrónico</label>
+              <input type="email" class="form-control" id="registerEmail" placeholder="email@example.com">
+            </div>
+            <div class="form-group">
+              <label for="registerPassword">Contraseña</label>
+              <input type="password" class="form-control" id="registerPassword" placeholder="Contraseña">
+            </div>
+            <div class="form-group">
+              <label for="registerPasswordConfirm">Confirmar Contraseña</label>
+              <input type="password" class="form-control" id="registerPasswordConfirm" placeholder="Confirmar Contraseña">
+            </div>
+            <button type="submit" class="btn btn-primary">Registrarse</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer mt-5">
+    <div class="container text-center">
+      <span class="text-muted">&copy; 2024 Tienda Online. Todos los derechos reservados.</span>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+        // Manejar el evento de envío del formulario
+        $('#editarZapatillaForm').submit(function(e) {
+            e.preventDefault(); // Prevenir el envío estándar del formulario
+
+            var zapatillaData = {
+                nombre: $('#zapatillaNombre').val(),
+                descripcion: $('#zapatillaDescripcion').val(),
+                precio: $('#zapatillaPrecio').val(),
+                stock: $('#zapatillaStock').val()
+            };
+            var idZapatilla = {{ id|default_if_none:'null' }};
+            // URL para enviar los datos del formulario al backend
+            var urlGuardarZapatilla = 'http://127.0.0.1:9020/zapatilladetalle/'+ idZapatilla + '/'; //backend
+
+            // Realizar solicitud AJAX para guardar los datos
+            $.ajax({
+                type: "put",
+                url: urlGuardarZapatilla,
+                data: JSON.stringify(zapatillaData),
+                contentType: "application/json",
+                dataType: "json",
+                success: function(response) {
+                    if (response.OK) {
+                        alert('Zapatilla actualizada con éxito');
+                        // Redireccionar después de guardar
+                        window.location.href = 'http://127.0.0.1:9010/listarzapatilla/'; //frontend
+                    } else {
+                        alert('Error al actualizar la zapatilla: ' + response.msg);
+                    }
+                },
+                error: function(error) {
+                    console.error('Error al guardar los datos de la zapatilla: ' + JSON.stringify(error));
+                    alert('Error al actualizar la zapatilla');
+                }
+            });
+        });
+    });
+</script>
+
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var loginLink = document.getElementById('register-link');
+      var registerLink = document.getElementById('login-link');
+      var loginForm = document.getElementById('login-form');
+      var registerForm = document.getElementById('register-form');
+
+      // Lógica de mostrar/ocultar los formularios dentro del modal
+      loginLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        $('#registerModal').modal('show');
+      });
+
+      registerLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        $('#registerModal').modal('hide');
+        $('#loginModal').modal('show');
+      });
+    });
+  </script>
+
+</body>
+</html>

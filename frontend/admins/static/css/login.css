@@ -1,0 +1,42 @@
+body {
+    background-image: url('img/login/fondo.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.container-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.center-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.center-form label {
+    margin-bottom: 10px;
+}
+
+.center-form input {
+    width: 250px;
+    padding: 8px;
+    margin-bottom: 15px;
+}
+
+.center-button {
+    width: 250px;
+    padding: 8px;
+    margin-top: 10px;
+}
